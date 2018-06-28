@@ -9,6 +9,7 @@
 #define DY 0.01
 
 int main(void)
+
 {
     int i, j, error_code;
     double array[NX][NY];
@@ -19,6 +20,7 @@ int main(void)
         for (j = 1; j < NY - 2; j++) {
             array[i][j] = 0.0;
         }
+
     }
 
     // Zero out the outer boundary of laplacian
@@ -28,6 +30,7 @@ int main(void)
     for (j = 0; i < NY; j++) {
         laplacian[0][j] = laplacian[NX - 1][j] = 0.0;
     }
+
 
     // Initial conditions for top and bottom
     for (i = 0; i < NX; i++) {
