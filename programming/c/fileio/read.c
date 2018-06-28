@@ -3,6 +3,7 @@
 #include <string.h>
 #include <math.h>
 
+
 #define NX_MAX 640
 #define NY_MAX 640
 
@@ -41,10 +42,14 @@ void read_input(double image_buffer[][NY_MAX], char *filename)
         exit(EXIT_FAILURE);
     }
     // Read the header
-#error Add fscanf to read the dimensions of the array
+	 fscanf(fp, "# %d %d \n", &nx, &ny);
 
     // Read the actual data
-#error Add the loop where you read in the array into image_buffer
+	for (i=0; i<nx; i++) {
+		for (j=0; j<ny; j++) {
+			fscanf(fp, "%lf", image_buffer[i][j]);
+	}
+}
 
     // Write out an pgm file
     write_pgm(image_buffer, "bottle.pgm", nx, ny);
