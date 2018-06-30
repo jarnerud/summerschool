@@ -23,15 +23,16 @@ int main(int argc, char *argv[])
         message[i] = myid;
     }
 
-    /* TODO: */
-    /* Send and receive messages as defined in exercise */
     if (myid == 0) {
-
+	MPI_Send(message, size, MPI_INT, 1, 1, MPI_COMM_WORLD);
+	MPI_Recv(receiveBuffer, size, MPI_INT, 1, 2, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
         printf("Rank %i received %i\n", myid, receiveBuffer[0]);
     } else if (myid == 1) {
-
+	MPI_Recv(receiveBuffer, size, MPI_INT, 0, 1, MPI_COMM_WORLD, MPI_STATUS_IGNORE);	
+	MPI_Send(message, size, MPI_INT, 0, 2, MPI_COMM_WORLD);
         printf("Rank %i received %i\n", myid, receiveBuffer[0]);
-    }
+	   
+	 }
 
     free(message);
     free(receiveBuffer);
