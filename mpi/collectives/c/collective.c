@@ -33,10 +33,8 @@ int main(int argc, char *argv[])
 
     /* Print data that will be sent */
     print_buffers(printbuf, sendbuf, 2 * NTASKS);
-	int offsets[NTASKS] = {0, 1 , 2 , 4,};
-	int counts [NTASKS] = {1, 1, 2, 4};
-	MPI_Gatherv(sendbuf,counts[rank], MPI_INT, recvbuf, counts, 
-offsets, MPI_INT,1,MPI_COMM_WORLD);
+
+	MPI_Alltoall(sendbuf, 2, MPI_INT, recvbuf, 2, MPI_INT, MPI_COMM_WORLD);
 
     /* Print data that was received */
 	print_buffers(printbuf, recvbuf, 2*NTASKS);
@@ -50,6 +48,7 @@ offsets, MPI_INT,1,MPI_COMM_WORLD);
 void init_buffers(int *sendbuffer, int *recvbuffer, int buffersize)
 {
     int rank, i;
+
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
  for (i = 0; i < buffersize; i++) {
