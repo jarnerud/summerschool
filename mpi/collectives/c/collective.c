@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <mpi.h>
@@ -33,10 +34,11 @@ int main(int argc, char *argv[])
     /* Print data that will be sent */
     print_buffers(printbuf, sendbuf, 2 * NTASKS);
 
-	MPI_Bcast(sendbuf, 2 * NTASKS, MPI_INT, 0, MPI_COMM_WORLD);
+	MPI_Scatter(sendbuf, 2, MPI_INT, recvbuf, 2, MPI_INT,0, 
+MPI_COMM_WORLD);
 
     /* Print data that was received */
-	print_buffers(printbuf, sendbuf, 2*NTASKS);
+	print_buffers(printbuf, recvbuf, 2*NTASKS);
 
 
     MPI_Finalize();
