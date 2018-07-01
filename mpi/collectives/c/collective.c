@@ -33,9 +33,10 @@ int main(int argc, char *argv[])
 
     /* Print data that will be sent */
     print_buffers(printbuf, sendbuf, 2 * NTASKS);
-
-	MPI_Scatter(sendbuf, 2, MPI_INT, recvbuf, 2, MPI_INT,0, 
-MPI_COMM_WORLD);
+	int offsets[NTASKS] = {0, 1 , 2 , 4,};
+	int counts [NTASKS] = {1, 1, 2, 4};
+	MPI_Gatherv(sendbuf,counts[rank], MPI_INT, recvbuf, counts, 
+offsets, MPI_INT,1,MPI_COMM_WORLD);
 
     /* Print data that was received */
 	print_buffers(printbuf, recvbuf, 2*NTASKS);
