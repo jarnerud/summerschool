@@ -33,12 +33,11 @@ int main(int argc, char *argv[])
     /* Print data that will be sent */
     print_buffers(printbuf, sendbuf, 2 * NTASKS);
 
-    /* TODO: use a single collective communication call (and maybe prepare
-     *       some parameters for the call) */
+	MPI_Bcast(sendbuf, 2 * NTASKS, MPI_INT, 0, MPI_COMM_WORLD);
 
     /* Print data that was received */
-    /* TODO: add correct buffer */
-    print_buffers(printbuf, ..., 2 * NTASKS);
+	print_buffers(printbuf, sendbuf, 2*NTASKS);
+
 
     MPI_Finalize();
     return 0;
@@ -48,9 +47,9 @@ int main(int argc, char *argv[])
 void init_buffers(int *sendbuffer, int *recvbuffer, int buffersize)
 {
     int rank, i;
-
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-    for (i = 0; i < buffersize; i++) {
+
+ for (i = 0; i < buffersize; i++) {
         recvbuffer[i] = -1;
         sendbuffer[i] = i + buffersize * rank;
     }
